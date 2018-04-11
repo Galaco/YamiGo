@@ -1,4 +1,4 @@
-package golaco
+package yamigo
 
 import (
 	"github.com/go-yaml/yaml"
@@ -8,11 +8,14 @@ import (
 
 type configuration struct {
 	App struct {
-		Url string
-		Port int
+		Url string `yaml:"url"`
+		Port int `yaml:"port"`
 	}
 	Views struct {
-		TemplateDir string
+		Template struct {
+			BaseDir string `yaml:"baseDir"`
+			BaseTemplate string `yaml:"baseTemplate"`
+		}
 	}
 }
 

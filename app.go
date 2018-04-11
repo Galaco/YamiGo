@@ -1,4 +1,4 @@
-package golaco
+package yamigo
 
 import (
 	"log"
@@ -15,13 +15,13 @@ func (this *App) Router() *Router{
 	return &this.router
 }
 
-func (app *App) Run() {
+func (this *App) Run() {
 	host := Configuration.App.Url + ":" + strconv.Itoa(Configuration.App.Port)
-	log.Fatal(http.ListenAndServe(host, app.Router().router))
+	log.Fatal(http.ListenAndServe(host, this.Router().router))
 }
 
 
-func Golaco(environment string) *App {
+func New(environment string) *App {
 	app := new(App)
 
 	app.router = Router{

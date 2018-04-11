@@ -1,4 +1,4 @@
-package golaco
+package yamigo
 
 import (
 	"github.com/julienschmidt/httprouter"

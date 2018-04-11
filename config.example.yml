@@ -3,4 +3,6 @@ app:
   port: 8080
 
 views:
-  template_dir: 'tmpl'
+  template:
+    baseDir: 'tmpl/'
+    baseTemplate: 'base'

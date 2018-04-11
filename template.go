@@ -1,45 +1,48 @@
-package golaco
+package yamigo
 
 import (
 	"strings"
 	"html/template"
+	"net/http"
 )
 
 
 // HTML Template wrapper
 type Template struct {
 	name string
+	path string
+	templates map[string]string
 	template *template.Template
 }
 
-// Find a matching template by route
-func (this *Template) findByRoute() (*template.Template, error) {
-	name := strings.TrimLeft(this.name, "/")
-	if name == "" {
-		name = "index"
-	}
-	t,err := template.ParseFiles("tmpl/" + name + ".html")  // Parse template file.
+func (this *Template) Render(writer http.ResponseWriter) {
+	this.template = template.Must(
+		template.ParseFiles(this.templates[this.name], this.templates[Configuration.Views.Template.BaseTemplate]))
 
-	return t,err
+	this.template.ExecuteTemplate(writer, "base", nil)
 }
 
-// Return internal template object
-func (this *Template) Get() *template.Template {
-	return this.template
+
+
+// Find a matching template by route
+func (this *Template) findByName(name string) {
+	name = strings.TrimLeft(name, "/")
+	if name == "" {
+		name = "index"
+		this.name = "index"
+	}
+	this.templates[name] = Configuration.Views.Template.BaseDir + name + ".html.tmpl"
 }
 
 
 // Return a new template object
 // Attempts to find a template that matches the current path
-func NewTemplate(name string) (*Template,error) {
-	ret := new(Template)
-	ret.name = name
+func NewTemplate(name string) (*Template) {
+	t := new(Template)
+	t.name = name
+	t.templates = make(map[string]string)
+	t.findByName(Configuration.Views.Template.BaseTemplate)
+	t.findByName(name)
 
-	t,err := ret.findByRoute()
-
-	if err == nil {
-		ret.template = t
-	}
-
-	return ret,err
+	return t
 }
