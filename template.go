@@ -6,20 +6,34 @@ import (
 	"net/http"
 )
 
+var parameters map[string]interface{}
+
+func Param(key string) interface{} {
+	return parameters[key]
+}
+
 
 // HTML Template wrapper
 type Template struct {
 	name string
-	path string
 	templates map[string]string
-	template *template.Template
 }
 
 func (this *Template) Render(writer http.ResponseWriter) {
-	this.template = template.Must(
-		template.ParseFiles(this.templates[this.name], this.templates[Configuration.Views.Template.BaseTemplate]))
+	t,_ := template.New(this.name).Funcs(
+		template.FuncMap{
+			"Param": Param,
+		}).ParseFiles(this.templates[this.name],
+		this.templates[Configuration.Views.Template.BaseTemplate])
 
-	this.template.ExecuteTemplate(writer, "base", nil)
+	t.ExecuteTemplate(writer, "base", Param)
+}
+
+func (this *Template) AddParam(key string, value interface{}) {
+	if parameters == nil {
+		parameters = make(map[string]interface{})
+	}
+	parameters[key] = value
 }
 
 
