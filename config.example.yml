@@ -5,4 +5,4 @@ app:
 views:
   template:
     baseDir: 'tmpl/'
-    baseTemplate: 'base'
+    baseTemplate: 'base.html.tmpl'

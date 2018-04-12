@@ -8,6 +8,7 @@ import (
 
 var parameters map[string]interface{}
 
+// Template function to get passed values
 func Param(key string) interface{} {
 	return parameters[key]
 }
@@ -41,11 +42,7 @@ func (this *Template) AddParam(key string, value interface{}) {
 // Find a matching template by route
 func (this *Template) findByName(name string) {
 	name = strings.TrimLeft(name, "/")
-	if name == "" {
-		name = "index"
-		this.name = "index"
-	}
-	this.templates[name] = Configuration.Views.Template.BaseDir + name + ".html.tmpl"
+	this.templates[name] = Configuration.Views.Template.BaseDir + name
 }
 
 

@@ -6,6 +6,7 @@ import (
 	"log"
 )
 
+// Application configuration
 type configuration struct {
 	App struct {
 		Url string `yaml:"url"`
@@ -21,6 +22,8 @@ type configuration struct {
 
 var Configuration configuration
 
+// Parse application configuration
+// Takes an environment value to find suitable configuration
 func (this *configuration) parse(environment string) {
 	filename := "config."
 	if environment != "" {
