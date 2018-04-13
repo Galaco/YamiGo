@@ -12,6 +12,10 @@ type configuration struct {
 		Url string `yaml:"url"`
 		Port int `yaml:"port"`
 	}
+	Assets struct {
+		BaseDir string `yaml:"baseDir"`
+		BaseRoute string `yaml:"baseRoute"`
+	}
 	Views struct {
 		Template struct {
 			BaseDir string `yaml:"baseDir"`

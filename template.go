@@ -38,7 +38,7 @@ func (this *Template) AddParam(key string, value interface{}) {
 // Find a matching template by route
 func (this *Template) findByName(name string) {
 	name = strings.TrimLeft(name, "/")
-	this.templates[name] = Configuration.Views.Template.BaseDir + name
+	this.templates[name] = strings.TrimRight(Configuration.Views.Template.BaseDir, "/") + "/" + name
 }
 
 // Return a new template object

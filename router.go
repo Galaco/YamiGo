@@ -23,6 +23,12 @@ func (this *Router) Register(method string, path string, action RouteActionInter
 	this.router.Handle(strings.ToUpper(method), path, this.routes[len(this.routes)-1].Execute)
 }
 
+func (this *Router) SetAssetPath(route string, filepath string) {
+	route = strings.TrimRight(strings.TrimLeft(route, "/"), "/")
+	filepath = strings.TrimRight(strings.TrimLeft(filepath, "/"), "/")
+	this.router.ServeFiles("/" + route + "/*filepath", http.Dir(filepath))
+}
+
 // Route implementation interface
 // Any registerable route should fulfill this interface
 type RouteActionInterface interface {

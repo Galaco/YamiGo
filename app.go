@@ -25,12 +25,13 @@ func (this *App) Run() {
 
 // Return a new YamiGo applicaton
 func New(environment string) *App {
-	app := new(App)
+	Configuration.parse(environment)
 
+	app := new(App)
 	app.router = Router{
 		router: new(httprouter.Router),
 	}
-	Configuration.parse(environment)
+	app.router.SetAssetPath(Configuration.Assets.BaseRoute, Configuration.Assets.BaseDir)
 
 	return app
 }
