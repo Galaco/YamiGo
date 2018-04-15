@@ -20,6 +20,8 @@ func (this *App) Router() *Router{
 // Run YamiGo in its current state
 func (this *App) Run() {
 	host := Configuration.App.Url + ":" + strconv.Itoa(Configuration.App.Port)
+
+	log.Printf("Application running at: %s\n", host)
 	log.Fatal(http.ListenAndServe(host, this.Router().router))
 }
 

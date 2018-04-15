@@ -4,6 +4,8 @@ import (
 	"github.com/julienschmidt/httprouter"
 	"strings"
 	"net/http"
+	"time"
+	"log"
 )
 
 // Router wrapper
@@ -58,5 +60,8 @@ func (this *Route) Execute(writer http.ResponseWriter, request *http.Request, pa
 		writer: writer,
 	}
 
+
 	this.action.Execute(req, res)
+
+	log.Printf(" %s [%s] Path: \"%s\" matched\n", (time.Now()).Format(time.RFC3339), req.request.Method, req.request.URL.Path)
 }
